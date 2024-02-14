@@ -18,9 +18,16 @@ namespace Assets.Scripts.Controllers
         [SerializeField]
         private float m_playerSpeed = 5;
         [SerializeField]
-        private float m_dashSpeed = 24f;
-        [SerializeField]
-        private float m_dashingTime = 0.2f;
+        private float m_dashDistance = 5f;
+        private float m_currentDashDistance = 0f;
+
+        private Vector2 m_dashDirection;
+
+
+        //[SerializeField]
+        //private float m_dashSpeed = 24f;
+        //[SerializeField]
+        //private float m_dashingTime = 0.2f;
 
 
         // Start is called before the first frame update
@@ -37,18 +44,38 @@ namespace Assets.Scripts.Controllers
 
         void OnDash()
         {
-            StartCoroutine(DashCoroutine());
-            m_rigidbody.MovePosition(new Vector2(0f, 0f));
-            transform.position = new Vector3(0, 0, 0);
+            m_currentDashDistance = m_dashDistance;
+
+
+            //StartCoroutine(DashCoroutine());
+
         }
 
         // Update is called once per frame
         void FixedUpdate()
         {
-            m_rigidbody.MovePosition(m_rigidbody.position + m_playerSpeed * Time.deltaTime * m_direction);
+            m_rigidbody.MovePosition(MoveVector() + DashVector());
         }
 
-        private bool m_isDashing = false;
+        private Vector2 MoveVector()
+        {
+            return m_rigidbody.position + m_playerSpeed * Time.deltaTime * m_direction;
+        }
+        private Vector2 DashVector()
+        {
+            if (m_direction != Vector2.zero )
+                m_dashDirection = m_direction;
+
+            Vector2 dashVector = m_currentDashDistance * m_dashDirection;
+            m_currentDashDistance = 0f;
+
+            return dashVector;
+        }
+
+
+
+
+        /*private bool m_isDashing = false;
         IEnumerator DashCoroutine()
         {
             if (m_isDashing)
@@ -64,6 +91,6 @@ namespace Assets.Scripts.Controllers
             m_rigidbody.velocity = new Vector2(0, 0);
 
             m_isDashing = false;
-        }
+        }*/
     }
 }
