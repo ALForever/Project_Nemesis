@@ -18,6 +18,10 @@ namespace Assets.Scripts.Controllers
         [SerializeField]
         private float m_playerSpeed = 5;
         [SerializeField]
+        private GameObject m_bullet;
+        [SerializeField]
+        private Transform m_bulletStartPoint;
+        [SerializeField]
         private float m_dashDistance = 5f;
         private float m_currentDashDistance = 0f;
 
@@ -51,6 +55,16 @@ namespace Assets.Scripts.Controllers
 
         }
 
+        void OnFire()
+        {
+            GameObject bullet = Instantiate(m_bullet, m_bulletStartPoint.position, Quaternion.identity);
+            if (bullet.TryGetComponent<Bullet>(out Bullet bulletAction))
+            {
+                bulletAction.SendBullet(m_bulletStartPoint.right);//вектор направления будет завязан на пушке
+            }
+
+        }
+
         // Update is called once per frame
         void FixedUpdate()
         {
@@ -61,6 +75,7 @@ namespace Assets.Scripts.Controllers
         {
             return m_rigidbody.position + m_playerSpeed * Time.deltaTime * m_direction;
         }
+
         private Vector2 DashVector()
         {
             if (m_direction != Vector2.zero )
