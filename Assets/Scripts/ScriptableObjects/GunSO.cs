@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New GunObject", menuName = "Gun Object", order = 51)]
-public class GunScriptableObject : ScriptableObject
+public class GunSO : ScriptableObject
 {
     [SerializeField]
     private GameObject m_prefab;

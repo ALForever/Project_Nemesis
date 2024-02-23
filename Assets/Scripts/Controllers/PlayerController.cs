@@ -1,70 +1,73 @@
-using UnityEngine;
+﻿using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
-    private const string HORIZONTAL_INPUT = "Horizontal";
-    private const string VERTICAL_INPUT = "Vertical";
+    #region SerializeField
+    [Inject] private InputController m_inputController;
+    [SerializeField] private Rigidbody2D m_rigidbody;
+    [SerializeField] private Vector2 m_direction;
+    [SerializeField] private float m_playerSpeed = 5;
+    [SerializeField] private float m_dashDistance = 5f;
+    #endregion
 
-    [SerializeField]
-    private float m_movementSpeed = 2;
-    [SerializeField]
-    private float m_dashValue = 2;
-    [SerializeField]
-    private GameObject m_body;
+    private float m_currentDashDistance = 0f;
+    private Vector2 m_dashDirection;
 
-    // Start is called before the first frame update
+    #region Unity Default Methods
+    private void Awake()
+    {
+        m_inputController.OnMoveAction += MovePlayer;
+        m_inputController.OnDashAction += DashPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        m_inputController.OnMoveAction -= MovePlayer;
+        m_inputController.OnDashAction -= DashPlayer;
+    }
+
     void Start()
     {
-        
+        m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        HandlePlayerMovement();
-        //HandlePlayerOrientation();
+        m_rigidbody.MovePosition(GetMoveVector() + GetDashVector());
+    }
+    #endregion
+
+    #region Input Controller Methods
+    private void MovePlayer(Vector2 position)
+    {
+        m_direction = position;
     }
 
-    private void HandlePlayerMovement()
+    private void DashPlayer()
     {
-        if (Input.GetButton(HORIZONTAL_INPUT))
+        m_currentDashDistance = m_dashDistance;
+    }
+    #endregion
+
+    #region Get Vector Methods
+    private Vector2 GetMoveVector()
+    {
+        return m_rigidbody.position + m_playerSpeed * Time.deltaTime * m_direction;
+    }
+
+    private Vector2 GetDashVector()
+    {
+        if (m_direction != Vector2.zero)
         {
-            transform.position = ReturnPositionFromInput(HORIZONTAL_INPUT);
+            m_dashDirection = m_direction;
         }
 
-        if (Input.GetButton(VERTICAL_INPUT))
-        {
-            transform.position = ReturnPositionFromInput(VERTICAL_INPUT);
-        }
+        Vector2 dashVector = m_currentDashDistance * m_dashDirection;
+        m_currentDashDistance = 0f;
+
+        return dashVector;
     }
-
-    private void HandlePlayerOrientation()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 objectPos = Camera.main.WorldToScreenPoint(m_body.transform.position);
-        mousePos.x -= objectPos.x;
-        mousePos.y -= objectPos.y;
-
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        m_body.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
-    }
-
-    private Vector3 ReturnPositionFromInput(string buttonName)
-    {
-        float dashValue = Input.GetKeyDown(KeyCode.Space) ? m_dashValue : 0;
-
-        int direction = Input.GetAxis(buttonName) < 0 ? -1 : 1;
-
-        if (dashValue > 0)
-        {
-            dashValue *= direction;
-        }
-
-        float deltaValue = Time.deltaTime * direction * m_movementSpeed;
-
-        float x = buttonName == HORIZONTAL_INPUT ? transform.position.x + deltaValue + dashValue : transform.position.x;
-        float y = buttonName == VERTICAL_INPUT ? transform.position.y + deltaValue + dashValue : transform.position.y;
-
-        return new Vector3(x, y, transform.position.z);
-    }
+    #endregion
 }
+

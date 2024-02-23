@@ -1,24 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletController : MonoBehaviour
 {
-    [SerializeField]
-    private float m_bulletForce = 1;
-    [SerializeField]
-    private float m_maxLife = 15;
+    #region SerializeField
+    [SerializeField] private float m_bulletForce = 1;
+    [SerializeField] private float m_maxLife = 15;
+    #endregion
 
     private Rigidbody2D m_rigidbody;
     private float m_life = 0;
 
-    // Start is called before the first frame update
+    #region Unity Default Methods
     void Start()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         m_life += Time.deltaTime;
@@ -28,7 +25,16 @@ public class Bullet : MonoBehaviour
             DestroyBullet();
         }
     }
+    #endregion
 
+    #region Collider Methods
+    void OnTriggerEnter2D(Collider2D hitInfo)
+    {
+        DestroyBullet();
+    }
+    #endregion
+
+    #region Bullet Controller Methods
     public void SendBullet(Vector2 direction)
     {
         if (m_rigidbody == null)
@@ -38,14 +44,9 @@ public class Bullet : MonoBehaviour
         m_rigidbody.AddForce(direction * m_bulletForce);
     }
 
-
-    void OnTriggerEnter2D(Collider2D hitInfo)
-    {
-        DestroyBullet();
-    }
-
     void DestroyBullet()
     {
-        Destroy(gameObject); //Уничтожение объекта
+        Destroy(gameObject);
     }
+    #endregion
 }
