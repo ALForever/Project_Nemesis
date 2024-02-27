@@ -3,8 +3,11 @@ using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Inject Field
+    [Inject] private readonly InputController m_inputController;
+    #endregion
+
     #region SerializeField
-    [Inject] private InputController m_inputController;
     [SerializeField] private Rigidbody2D m_rigidbody;
     [SerializeField] private Vector2 m_direction;
     [SerializeField] private float m_playerSpeed = 5;

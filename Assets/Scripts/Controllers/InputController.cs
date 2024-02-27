@@ -8,11 +8,17 @@ public class InputController : MonoBehaviour
     public Action<Vector2> OnMoveAction;
     public Action OnFireAction;
     public Action OnDashAction;
+    public Action OnChangeGunAction;
 
     void OnAiming(InputValue inputValue)
     {
         Vector3 position = inputValue.Get<Vector2>();
         OnAimingAction?.Invoke(position);
+    }
+
+    void OnChangeGun()
+    {
+        OnChangeGunAction?.Invoke();
     }
 
     void OnMove(InputValue inputValue)

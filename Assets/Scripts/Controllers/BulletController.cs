@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    #region SerializeField
-    [SerializeField] private float m_bulletForce = 1;
-    [SerializeField] private float m_maxLife = 15;
-    #endregion
-
+    private float m_bulletForce;
+    private float m_maxLife;
     private Rigidbody2D m_rigidbody;
-    private float m_life = 0;
+    private float m_life;
+    private float m_bulletDamage;
+
+    public float BulletDamage => m_bulletDamage;
 
     #region Unity Default Methods
     void Start()
@@ -35,6 +35,13 @@ public class BulletController : MonoBehaviour
     #endregion
 
     #region Bullet Controller Methods
+    public void InitBulletObject(float bulletDamage, float bulletForce, float maxLife)
+    {
+        m_bulletDamage = bulletDamage;
+        m_bulletForce = bulletForce;
+        m_maxLife = maxLife;
+    }
+
     public void SendBullet(Vector2 direction)
     {
         if (m_rigidbody == null)
