@@ -1,6 +1,7 @@
 using Assets.Scripts.Extensions;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnemySpawnerArea : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemySpawnerArea : MonoBehaviour
     [SerializeField] private float m_spawnTimeOut = 0.001f;
     [SerializeField] private int m_spawnLimit = 10;
     #endregion
+
+    [Inject] private UIController m_controller;
 
     private float m_currentSpawnTimeOut;
     private int m_currentSpawnUnitsCount;
@@ -32,17 +35,19 @@ public class EnemySpawnerArea : MonoBehaviour
     #region Enemy Spawner Area Methods
     private void SpawnEnemy()
     {
-        if (m_currentSpawnUnitsCount > m_spawnLimit)
+        if (m_currentSpawnUnitsCount >= m_spawnLimit)
         {
             return;
         }
 
         if (m_currentSpawnTimeOut <= 0)
         {
+            
+
             GameObject enemyGameObject = Instantiate(m_enemyGameObject, Random.insideUnitSphere * m_areaRadius + transform.position, Quaternion.identity);
-            if (enemyGameObject.TryGetComponent(out EnemyController enemyController))
+            if (enemyGameObject.TryGetComponent(out Enemy enemy))
             {
-                enemyController.InitEnemyObject(m_target.transform, m_enemyScriptableObjects.GetRandomElement());
+                enemy.InitEnemyObject(m_target.transform, m_enemyScriptableObjects.GetRandomElement(), m_controller);
             }
             m_currentSpawnTimeOut = m_spawnTimeOut;
             m_currentSpawnUnitsCount++;

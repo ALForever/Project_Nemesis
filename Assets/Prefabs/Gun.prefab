@@ -82,7 +82,8 @@ MonoBehaviour:
   m_gunsScriptableObject:
   - {fileID: 11400000, guid: fb9eaea03e06fe14380ad66498f5b667, type: 2}
   - {fileID: 11400000, guid: 64ee20889e1b98e4d98ac6780ed228ed, type: 2}
-  m_bullet: {fileID: 7094667265534669872, guid: 1443b77cf85a2bf40888e6f9a75d65a3, type: 3}
+  m_bullet: {fileID: 7094667265534669872, guid: 1443b77cf85a2bf40888e6f9a75d65a3,
+    type: 3}
 --- !u!1 &4769646301717639121
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +157,8 @@ SpriteRenderer:
   m_SortingLayerID: 1251563321
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: f78237d5ce15b764f9f64d761b29fe07, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: f78237d5ce15b764f9f64d761b29fe07,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
