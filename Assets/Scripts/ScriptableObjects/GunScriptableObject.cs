@@ -4,15 +4,19 @@ using UnityEngine;
 public class GunScriptableObject : ScriptableObject
 {
     #region SerializeField
+    [Header("Standart fields")]
     [SerializeField] private GameObject m_prefab;
     [SerializeField] private string m_name;
     [SerializeField] private string m_description;
     [SerializeField] private Sprite m_icon;
+
+    [Header("GunScriptableObject fileds")]
     [SerializeField] private float m_damage;
     [SerializeField] private int m_minLevel;
     [SerializeField] private float m_maxTimeBetweenShots;
     [SerializeField] private float m_force;
     [SerializeField] private float m_maxLife;
+    [SerializeField] private AudioClip m_gunShootSound;
     #endregion
 
     public GameObject Prefab => m_prefab;
@@ -24,4 +28,5 @@ public class GunScriptableObject : ScriptableObject
     public float MaxTimeBetweenShots => m_maxTimeBetweenShots;
     public float Force => m_force;
     public float MaxLife => m_maxLife;
+    public AudioClip GunShootSound => m_gunShootSound;
 }

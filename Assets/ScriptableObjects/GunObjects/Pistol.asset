@@ -21,3 +21,4 @@ MonoBehaviour:
   m_maxTimeBetweenShots: 0.002
   m_force: 10
   m_maxLife: 10
+  m_gunShootSound: {fileID: 8300000, guid: 73eb136272f91544ab42b37059da7d74, type: 3}

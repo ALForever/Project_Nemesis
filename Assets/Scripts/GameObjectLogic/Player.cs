@@ -4,18 +4,36 @@ using Zenject;
 public class Player : MonoBehaviour
 {
     #region Inject Field
+    [Inject] private readonly UIController m_uIController;
     [Inject] private readonly InputController m_inputController;
     #endregion
 
     #region SerializeField
-    [SerializeField] private Rigidbody2D m_rigidbody;
-    [SerializeField] private Vector2 m_direction;
-    [SerializeField] private float m_playerSpeed = 5;
-    [SerializeField] private float m_dashDistance = 5f;
+    [SerializeField] private PlayerScriptableObject m_playerScriptableObject;
     #endregion
 
+    private Rigidbody2D m_rigidbody;
+    private Vector2 m_direction;
     private float m_currentDashDistance = 0f;
     private Vector2 m_dashDirection;
+    private float m_currentHealth;
+
+    public float CurrentHealth
+    {
+        get => m_currentHealth;
+        set
+        {
+            m_uIController.SetPlayerHealthValue(value);
+            if (value <= 0)
+            {
+                DestroyPlayer();
+                m_inputController.enabled = false;
+                m_uIController.ShowPlayerDeathText();
+                return;
+            }
+            m_currentHealth = value;
+        }
+    }
 
     #region Unity Default Methods
     private void Awake()
@@ -32,6 +50,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        CurrentHealth = m_playerScriptableObject.MaxHealth;
+        m_uIController.SetMaxHealth(CurrentHealth);
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -49,14 +69,14 @@ public class Player : MonoBehaviour
 
     private void DashPlayer()
     {
-        m_currentDashDistance = m_dashDistance;
+        m_currentDashDistance = m_playerScriptableObject.DashDistance;
     }
     #endregion
 
     #region Get Vector Methods
     private Vector2 GetMoveVector()
     {
-        return m_rigidbody.position + m_playerSpeed * Time.deltaTime * m_direction;
+        return m_rigidbody.position + m_playerScriptableObject.PlayerSpeed * Time.deltaTime * m_direction;
     }
 
     private Vector2 GetDashVector()
@@ -70,6 +90,13 @@ public class Player : MonoBehaviour
         m_currentDashDistance = 0f;
 
         return dashVector;
+    }
+    #endregion
+
+    #region Player Methods
+    private void DestroyPlayer()
+    {
+        Destroy(this.gameObject);
     }
     #endregion
 }

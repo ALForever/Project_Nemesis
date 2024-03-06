@@ -9,6 +9,6 @@ public class InputSystemInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<InputController>().FromInstance(m_controller);
+        Container.Bind<InputController>().FromInstance(m_controller).NonLazy();
     }
 }

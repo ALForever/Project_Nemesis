@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
+
     public Action<Vector3> OnAimingAction;
     public Action<Vector2> OnMoveAction;
     public Action OnFireAction;

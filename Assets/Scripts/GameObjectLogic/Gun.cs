@@ -20,9 +20,12 @@ public class Gun : MonoBehaviour
     private GunScriptableObject m_currentGun;
     private int m_currentGunIndex;
 
+    private AudioSource m_audioSource;
+
     #region Unity Default Methods
     private void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
         if (m_gunsScriptableObject.IsNullOrEmptyList())
         {
             return;
@@ -58,6 +61,7 @@ public class Gun : MonoBehaviour
             GameObject bulletGameObject = Instantiate(m_bullet, m_bulletStartPoint.position, Quaternion.identity);
             if (bulletGameObject.TryGetComponent(out Bullet bullet))
             {
+                m_audioSource?.Play();
                 bullet.InitBulletObject(m_currentGun.Damage, m_currentGun.Force, m_currentGun.MaxLife);
                 bullet.SendBullet(m_bulletStartPoint.right); // Вектор направления будет завязан на пушке (сейчас right отлично подходит)
             }
@@ -99,6 +103,7 @@ public class Gun : MonoBehaviour
         m_currentGun = gunScriptable;
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = m_currentGun.Icon;
+        m_audioSource.clip = m_currentGun.GunShootSound;
     }
     #endregion
 }

@@ -14,17 +14,17 @@ public class EnemySpawnerArea : MonoBehaviour
     [SerializeField] private int m_spawnLimit = 10;
     #endregion
 
-    [Inject] private UIController m_controller;
-
     private float m_currentSpawnTimeOut;
     private int m_currentSpawnUnitsCount;
 
     public float AreaRadius => m_areaRadius;
 
+    private bool CanSpawnEnemy => m_target != null && !m_enemyScriptableObjects.IsNullOrEmptyList();
+
     #region Unity Default Methods
     void Update()
     {
-        if (m_enemyScriptableObjects.IsNullOrEmptyList())
+        if (!CanSpawnEnemy)
         {
             return;
         }
@@ -42,12 +42,10 @@ public class EnemySpawnerArea : MonoBehaviour
 
         if (m_currentSpawnTimeOut <= 0)
         {
-            
-
-            GameObject enemyGameObject = Instantiate(m_enemyGameObject, Random.insideUnitSphere * m_areaRadius + transform.position, Quaternion.identity);
-            if (enemyGameObject.TryGetComponent(out Enemy enemy))
+            GameObject enemyGameObject = Instantiate(m_enemyGameObject, Random.insideUnitCircle * m_areaRadius + (Vector2)transform.position, Quaternion.identity);
+            if (enemyGameObject.TryGetComponent(out EnemyModel enemy))
             {
-                enemy.InitEnemyObject(m_target.transform, m_enemyScriptableObjects.GetRandomElement(), m_controller);
+                enemy.InitEnemyObject(m_target.transform, m_enemyScriptableObjects.GetRandomElement());
             }
             m_currentSpawnTimeOut = m_spawnTimeOut;
             m_currentSpawnUnitsCount++;
