@@ -20,7 +20,7 @@ public class CharacterKilledCounterViewModel : MonoBehaviour
         {
             return;
         }
-        m_characterInerface.CurrentHealth.OnValueChanged += HealthChanged;
+        m_characterInerface.CurrentHealth.Subscribe(x => HealthChanged(x));
     }
 
     private void HealthChanged(float value)

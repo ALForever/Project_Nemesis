@@ -23,7 +23,7 @@ public class CharacterDeathViewModel : MonoBehaviour
             return;
         }
 
-        m_characterInerface.CurrentHealth.OnValueChanged += HealthChange;
+        m_characterInerface.CurrentHealth.Subscribe(x => HealthChange(x));
 
         InitRestartButton();
         SetElementsVisible(false);

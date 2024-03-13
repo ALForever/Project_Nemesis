@@ -19,3 +19,4 @@ MonoBehaviour:
   m_playerSpeed: 5
   m_dashDistance: 5
   m_maxHealth: 100
+  m_nextLevelUpValue: 5

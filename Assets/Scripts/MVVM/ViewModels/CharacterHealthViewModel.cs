@@ -1,41 +1,53 @@
-using Assets.Scripts.CSharpClasses.EditorExtensions;
 using Assets.Scripts.CSharpClasses.Interfaces;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterHealthViewModel : MonoBehaviour
 {
     #region SerializeFields
-    [SerializeField] private TextMeshProUGUI m_playerHealthTmpText;
     [SerializeField] private TextMeshProUGUI m_playerHealthCounterTmpText;
     [SerializeField] private Slider m_healthBarSlider;
     [SerializeField] private GameObject m_character;
     #endregion
 
     private ICharacter m_characterInerface;
+    private bool m_isEventsSubscribed;
+
+    private void Awake()
+    {
+        m_healthBarSlider.interactable = false;
+        InitCharacter(m_character);
+    }
+
+    private void SubscribeEvents()
+    {
+        m_characterInerface.CurrentHealth.Subscribe(x => HealthChange(x));
+        m_characterInerface.MaxHealth.Subscribe(x => MaxHealthChange(x));
+        m_isEventsSubscribed = true;
+    }
+
+    private void UnsubscribeEvents()
+    {
+        m_characterInerface.CurrentHealth.Unsubscribe(x => HealthChange(x));
+        m_characterInerface.MaxHealth.Unsubscribe(x => MaxHealthChange(x));
+        m_isEventsSubscribed = false;
+    }
 
     void Start()
     {
-        if (!m_character.TryGetComponent(out m_characterInerface))
-        {
-            return;
-        }
-
-        m_characterInerface.CurrentHealth.OnValueChanged += HealthChange;
-
         SetElementsVisible(true);
+    }
 
-        m_healthBarSlider.maxValue = 100;
-        m_healthBarSlider.value = 100;
-
-        SetHealthBarColor();
+    public void SetCharacter(GameObject character)
+    {
+        InitCharacter(character);
     }
 
     private void SetElementsVisible(bool visible)
     {
         m_healthBarSlider.gameObject.SetActive(visible);
-        m_playerHealthTmpText.gameObject.SetActive(visible);
         m_playerHealthCounterTmpText.gameObject.SetActive(visible);
     }
 
@@ -48,7 +60,12 @@ public class CharacterHealthViewModel : MonoBehaviour
         if (value <= 0)
         {
             SetElementsVisible(false);
+            Destroy(gameObject);
         }
+    }
+    private void MaxHealthChange(float value)
+    {
+        m_healthBarSlider.maxValue = value;
     }
 
     private void SetHealthBarColor()
@@ -63,6 +80,23 @@ public class CharacterHealthViewModel : MonoBehaviour
                 float p when p > 40 => Color.yellow,
                 _ => Color.red
             };
+        }
+    }
+
+    private void InitCharacter(GameObject gameObject)
+    {
+        if (gameObject.IsUnityNull() || !gameObject.TryGetComponent(out m_characterInerface))
+        {
+            if (m_isEventsSubscribed)
+            {
+                UnsubscribeEvents();
+            }
+            return;
+        }
+
+        if (!m_isEventsSubscribed)
+        {
+            SubscribeEvents();
         }
     }
 }

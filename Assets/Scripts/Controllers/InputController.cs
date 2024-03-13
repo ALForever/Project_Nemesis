@@ -5,11 +5,12 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
 
-    public Action<Vector3> OnAimingAction;
-    public Action<Vector2> OnMoveAction;
-    public Action OnFireAction;
-    public Action OnDashAction;
-    public Action OnChangeGunAction;
+    public event Action<Vector3> OnAimingAction;
+    public event Action<Vector2> OnMoveAction;
+    public event Action OnFireAction;
+    public event Action OnDashAction;
+    public event Action OnChangeGunAction;
+    public event Action OnInterractAction;
 
     void OnAiming(InputValue inputValue)
     {
@@ -37,5 +38,10 @@ public class InputController : MonoBehaviour
     void OnDash()
     {
         OnDashAction?.Invoke();
+    }
+
+    void OnInterract()
+    {
+        OnInterractAction?.Invoke();
     }
 }

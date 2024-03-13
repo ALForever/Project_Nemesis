@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd82a3115c033874ea9238057e01f08d, type: 3}
+  m_Name: Alien
+  m_EditorClassIdentifier: 
+  m_prefab: {fileID: 0}
+  m_name: Alien
+  m_description: take you from here far away
+  m_icon: {fileID: -1134486287, guid: 789e3ea1b35f9d24d883dde166174b62, type: 3}
+  m_attackDamage: 20
+  m_attackCooldown: 1
+  m_experienceForKill: 5
+  m_maxHealth: 30
+  m_movementSpeed: 2
+  m_enemyHitSound: {fileID: 8300000, guid: e1e19f7506feb6945a654493066469b2, type: 3}
+  m_gunPrefab: {fileID: 1165795228155086650, guid: 83aa847b3f326db4eaab2b6fe0efb63c, type: 3}
+  m_drop:
+  - {fileID: 11400000, guid: 2443c76c3543f8b43bb296b06a05e802, type: 2}
+  - {fileID: 11400000, guid: 64ee20889e1b98e4d98ac6780ed228ed, type: 2}
