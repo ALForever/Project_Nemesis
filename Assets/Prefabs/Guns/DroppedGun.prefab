@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1fa31780c5b4440a13058263e88695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gunScriptableObject: {fileID: 11400000, guid: 2443c76c3543f8b43bb296b06a05e802, type: 2}
+  m_timeToDisposeGun: 5
 --- !u!82 &8670916242688341068
 AudioSource:
   m_ObjectHideFlags: 0

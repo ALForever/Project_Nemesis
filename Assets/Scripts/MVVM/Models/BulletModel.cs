@@ -1,8 +1,11 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class BulletModel : MonoBehaviour
 {
+    [SerializeField] private float m_offset;
+
     private Rigidbody2D m_rigidbody;
     private float m_bulletDamage;
     private float m_bulletForce;
@@ -41,11 +44,12 @@ public class BulletModel : MonoBehaviour
     #endregion
 
     #region Bullet Controller Methods
-    public void InitBulletObject(float bulletDamage, float bulletForce, float maxLife)
+    public void InitBulletObject(float bulletDamage, float bulletForce, float maxLife, float rotationZ)
     {
         m_bulletDamage = bulletDamage;
         m_bulletForce = bulletForce;
         m_maxLifeTime = maxLife;
+        transform.rotation = Quaternion.Euler(0, 0, rotationZ + m_offset);
     }
 
     public void SendBullet(Vector2 direction)

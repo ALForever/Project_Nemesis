@@ -17,8 +17,10 @@ MonoBehaviour:
   m_description: standart pistol
   m_icon: {fileID: 21300000, guid: c2fc12b8eaf86c247a0048dc003bf1a7, type: 3}
   m_damage: 10
-  m_minLevel: 0
-  m_maxTimeBetweenShots: 0.002
   m_force: 10
   m_maxLife: 10
+  m_maxTimeBetweenShots: 0.002
+  m_minLevel: 0
+  m_dropProbability: 0
+  m_menuIcon: {fileID: 21300000, guid: 99a4a231e5e71be4f8f765e83f0a8e0d, type: 3}
   m_gunShootSound: {fileID: 8300000, guid: 73eb136272f91544ab42b37059da7d74, type: 3}

@@ -14,6 +14,7 @@ public class GunScriptableObject : BaseScriptableObject
     [SerializeField] private int m_minLevel;
     [Header("Drop system")]
     [SerializeField] private float m_dropProbability;
+    [SerializeField] private Sprite m_menuIcon;
     [Header("Sound")]
     [SerializeField] private AudioClip m_gunShootSound;
     #endregion
@@ -24,5 +25,6 @@ public class GunScriptableObject : BaseScriptableObject
     public float MaxTimeBetweenShots => m_maxTimeBetweenShots;
     public int MinLevel => m_minLevel;
     public float DropProbability => m_dropProbability;
+    public Sprite MenuIcon => m_menuIcon;
     public AudioClip GunShootSound => m_gunShootSound;
 }

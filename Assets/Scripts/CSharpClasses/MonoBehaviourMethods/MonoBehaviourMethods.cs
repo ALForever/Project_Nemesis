@@ -15,7 +15,7 @@ namespace Assets.Scripts.CSharpClasses.MonoBehaviourMethods
 
         public static bool TryInstantiateComponent<T>(GameObject gameObject, Vector2 position, out T component, out GameObject newGameObject)
         {
-            newGameObject = UnityEngine.Object.Instantiate(gameObject, position, Quaternion.identity);
+            newGameObject = Object.Instantiate(gameObject, position, Quaternion.identity);
             return TryGetComponent(newGameObject, out component);
         }
 
@@ -23,7 +23,7 @@ namespace Assets.Scripts.CSharpClasses.MonoBehaviourMethods
         {
             if (!gameObject.TryGetComponent(out component))
             {
-                UnityEngine.Object.Destroy(gameObject);
+                Object.Destroy(gameObject);
                 return false;
             }
             return true;

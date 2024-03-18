@@ -17,6 +17,9 @@ public class GunModel : MonoBehaviour
     private GunScriptableObject m_currentGun;
 
     private AudioSource m_audioSource;
+    private SpriteRenderer m_spriteRenderer;
+
+    private float m_rotationZ;
 
     #region Inject
     [Inject]
@@ -31,6 +34,7 @@ public class GunModel : MonoBehaviour
     private void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
 
         InitGunObject(m_gunInventorySystem.Gun);
         m_gunInventorySystem.OnGunChanged += InitGunObject;
@@ -63,7 +67,7 @@ public class GunModel : MonoBehaviour
             if (bulletGameObject.TryGetComponent(out BulletModel bullet))
             {
                 m_audioSource?.Play();
-                bullet.InitBulletObject(m_currentGun.Damage, m_currentGun.Force, m_currentGun.MaxLife);
+                bullet.InitBulletObject(m_currentGun.Damage, m_currentGun.Force, m_currentGun.MaxLife, m_rotationZ);
                 bullet.SendBullet(m_bulletStartPoint.right); // Вектор направления будет завязан на пушке (сейчас right отлично подходит)
             }
             m_currentTimeBetweenShots = m_currentGun.MaxTimeBetweenShots;
@@ -76,10 +80,14 @@ public class GunModel : MonoBehaviour
 
     private void AimingGun(Vector3 position)
     {
+        Vector3 gunRotateVEctor = Camera.main.ScreenToWorldPoint(position);
+
         position.z = Camera.main.nearClipPlane;
         position = Camera.main.ScreenToWorldPoint(position) - transform.position;
-        float rotationZ = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rotationZ + m_offset);
+        m_rotationZ = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, m_rotationZ + m_offset);
+
+        m_spriteRenderer.flipY = gunRotateVEctor.x < transform.position.x;
     }
     #endregion
 
@@ -87,8 +95,7 @@ public class GunModel : MonoBehaviour
     private void InitGunObject(GunScriptableObject gunScriptable)
     {
         m_currentGun = gunScriptable;
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = m_currentGun.Icon;
+        m_spriteRenderer.sprite = m_currentGun.Icon;
         m_audioSource.clip = m_currentGun.GunShootSound;
     }
     #endregion

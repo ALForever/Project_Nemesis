@@ -3,7 +3,9 @@ using Zenject;
 
 public class DroppedGunModel : MonoBehaviour
 {
-    GunScriptableObject m_gunScriptableObject;
+    [SerializeField] private float m_timeToDisposeGun;
+
+    private GunScriptableObject m_gunScriptableObject;
 
     private InputController m_inputController;
     private GunInventorySystem m_inventorySystem;
@@ -12,6 +14,8 @@ public class DroppedGunModel : MonoBehaviour
 
     private bool m_canInterract;
     private bool m_inBeforeDestroyActions = false;
+
+    private float m_currentDropOnGroundTime;
 
     [Inject]
     public void Init(InputController inputController, GunInventorySystem gunInventorySystem)
@@ -24,6 +28,16 @@ public class DroppedGunModel : MonoBehaviour
     {
         m_audioSource = GetComponent<AudioSource>();
         m_inputController.OnInterractAction += InterractAction;
+    }
+
+    void Update()
+    {
+        m_currentDropOnGroundTime += Time.deltaTime;
+
+        if (m_currentDropOnGroundTime >= m_timeToDisposeGun)
+        {
+            Destroy(gameObject);
+        }
     }
 
     #region Collider Methods

@@ -20,6 +20,8 @@ public class GunInventorySystem : MonoBehaviour
     public GunScriptableObject Gun => m_guns[m_currentGunKey];
 
     public event Action<GunScriptableObject> OnGunChanged;
+
+    public event Action<GunScriptableObject> OnGunAdded;
     public event Action<GunScriptableObject> OnGunRemoved;
 
     [Inject]
@@ -41,7 +43,12 @@ public class GunInventorySystem : MonoBehaviour
             return false;
         }
 
-        return m_guns.TryAdd(gunScriptable.Name, gunScriptable);
+        if (!m_guns.TryAdd(gunScriptable.Name, gunScriptable))
+        {
+            return false;
+        }
+        OnGunAdded?.Invoke(gunScriptable);
+        return true;
     }
 
     public bool TryAddGunBasedOnLevelSystem(GunScriptableObject gunScriptable)

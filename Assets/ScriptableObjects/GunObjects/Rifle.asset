@@ -22,4 +22,5 @@ MonoBehaviour:
   m_maxTimeBetweenShots: 0.0001
   m_minLevel: 1
   m_dropProbability: 50
+  m_menuIcon: {fileID: 21300000, guid: a910ce2da6c99a340a4fdc11cbacd90b, type: 3}
   m_gunShootSound: {fileID: 8300000, guid: 89374c3c0262da242a0f03c1bab62ecb, type: 3}
