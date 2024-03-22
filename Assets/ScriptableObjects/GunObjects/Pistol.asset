@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82523b736e670aa4e8fdb8d4b56e9345, type: 3}
+  m_Script: {fileID: 11500000, guid: 039c573d61a3b074d82d9dc4bafe8b01, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
   m_prefab: {fileID: 0}
@@ -21,6 +21,6 @@ MonoBehaviour:
   m_maxLife: 10
   m_maxTimeBetweenShots: 0.002
   m_minLevel: 0
-  m_dropProbability: 0
-  m_menuIcon: {fileID: 21300000, guid: 99a4a231e5e71be4f8f765e83f0a8e0d, type: 3}
   m_gunShootSound: {fileID: 8300000, guid: 73eb136272f91544ab42b37059da7d74, type: 3}
+  m_dropProbability: 1
+  m_menuIcon: {fileID: 21300000, guid: 99a4a231e5e71be4f8f765e83f0a8e0d, type: 3}

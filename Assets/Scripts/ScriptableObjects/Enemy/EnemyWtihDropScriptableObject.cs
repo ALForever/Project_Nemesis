@@ -6,8 +6,8 @@ public class EnemyWtihDropScriptableObject : EnemyScriptableObject
 {
     [Header("Drop system")]
     [SerializeField] private GameObject m_gunPrefab;
-    [SerializeField] private List<GunScriptableObject> m_drop;
+    [SerializeField] private List<DropableGunScriptableObject> m_drop;
 
-    public List<GunScriptableObject> Drop => m_drop;
+    public List<DropableGunScriptableObject> Drop => m_drop;
     public GameObject GunPrefab => m_gunPrefab;
 }

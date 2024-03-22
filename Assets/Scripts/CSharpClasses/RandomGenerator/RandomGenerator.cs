@@ -8,9 +8,9 @@ namespace Assets.Scripts.CSharpClasses.RandomGenerator
     {
         public static Random s_random = new();
 
-        public static GunScriptableObject GetRandomGun(IEnumerable<GunScriptableObject> guns)
+        public static DropableGunScriptableObject GetRandomGun(IEnumerable<DropableGunScriptableObject> guns)
         {
-            Dictionary<GunScriptableObject, float> gunsWithProbability = guns.ToDictionary(x => x, x => x.DropProbability);
+            Dictionary<DropableGunScriptableObject, float> gunsWithProbability = guns.ToDictionary(x => x, x => x.DropProbability);
             return GetRandomWithProbability(gunsWithProbability);
         }
 

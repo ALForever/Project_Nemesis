@@ -178,7 +178,7 @@ public class EnemyModel : MonoBehaviour, ICharacter
     {
         if (TryInstantiateDrop(enemy.GunPrefab, m_rigidbody.position, out DroppedGunModel gunModel, out GameObject gameObject))
         {
-            GunScriptableObject gun = RandomGenerator.GetRandomGun(enemy.Drop);
+            DropableGunScriptableObject gun = RandomGenerator.GetRandomGun(enemy.Drop);
             if (gun == default)
             {
                 Destroy(gameObject);

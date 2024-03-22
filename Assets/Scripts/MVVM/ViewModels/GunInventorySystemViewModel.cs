@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using Assets.Scripts.CSharpClasses.Interfaces;
+using Assets.Scripts.CSharpClasses.Inventory;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -7,16 +8,16 @@ public class GunInventorySystemViewModel : MonoBehaviour
 {
     [SerializeField] private GridLayoutGroup m_gridLayoutGroup; 
 
-    private GunInventorySystem m_inventorySystem;
+    private GunInventoryBasedOnLevelSystem m_inventorySystem;
 
     [Inject]
-    public void Init(GunInventorySystem gunInventorySystem)
+    public void Init(GunInventoryBasedOnLevelSystem gunInventorySystem)
     {
         m_inventorySystem = gunInventorySystem;
-        m_inventorySystem.OnGunAdded += AddGunToUI;
+        m_inventorySystem.OnItemAdd += AddGunToUI;
     }
 
-    private void AddGunToUI(GunScriptableObject gunScriptableObject)
+    private void AddGunToUI(IDropableScriptableObject gunScriptableObject)
     {
         GameObject gameObject = new();
         gameObject.name = gunScriptableObject.Name;

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.CSharpClasses.Extensions;
 using Assets.Scripts.CSharpClasses.Interfaces;
+using Assets.Scripts.CSharpClasses.Inventory;
 using Assets.Scripts.CSharpClasses.Reactive;
 using UnityEngine;
 using Zenject;
@@ -14,7 +15,7 @@ public class PlayerModel : MonoBehaviour, ICharacter
     #region Fileds form Inject
     private InputController m_inputController;
     private LevelSystem m_levelSystem;
-    private GunInventorySystem m_gunInventorySystem;
+    private GunInventoryBasedOnLevelSystem m_gunInventorySystem;
     #endregion
 
     private Rigidbody2D m_rigidbody;
@@ -28,7 +29,7 @@ public class PlayerModel : MonoBehaviour, ICharacter
 
     #region Inject
     [Inject]
-    public void Init(InputController inputController, LevelSystem levelSystem, GunInventorySystem gunInventorySystem)
+    public void Init(InputController inputController, LevelSystem levelSystem, GunInventoryBasedOnLevelSystem gunInventorySystem)
     {
         m_inputController = inputController;
         m_levelSystem = levelSystem;
@@ -92,7 +93,7 @@ public class PlayerModel : MonoBehaviour, ICharacter
 
     private void ChangeGun()
     {
-        m_gunInventorySystem.GoToNextGun();
+        m_gunInventorySystem.GoToNextItem();
     }
     #endregion
 

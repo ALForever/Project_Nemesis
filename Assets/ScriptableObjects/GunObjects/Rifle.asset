@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82523b736e670aa4e8fdb8d4b56e9345, type: 3}
+  m_Script: {fileID: 11500000, guid: 039c573d61a3b074d82d9dc4bafe8b01, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: 
   m_prefab: {fileID: 0}
   m_name: Rifle
   m_description: standart rifle
-  m_icon: {fileID: 21300000, guid: 01f550b543011184786ea3a1b55fae54, type: 3}
+  m_icon: {fileID: 0}
   m_damage: 50
   m_force: 20
   m_maxLife: 15
   m_maxTimeBetweenShots: 0.0001
   m_minLevel: 1
+  m_gunShootSound: {fileID: 8300000, guid: 89374c3c0262da242a0f03c1bab62ecb, type: 3}
   m_dropProbability: 50
   m_menuIcon: {fileID: 21300000, guid: a910ce2da6c99a340a4fdc11cbacd90b, type: 3}
-  m_gunShootSound: {fileID: 8300000, guid: 89374c3c0262da242a0f03c1bab62ecb, type: 3}

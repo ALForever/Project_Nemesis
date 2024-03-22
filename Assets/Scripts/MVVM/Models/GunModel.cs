@@ -1,4 +1,5 @@
 using Assets.Scripts.CSharpClasses.Extensions;
+using Assets.Scripts.CSharpClasses.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,7 @@ public class GunModel : MonoBehaviour
     #endregion
 
     private InputController m_inputController;
-    private GunInventorySystem m_gunInventorySystem;
+    private GunInventoryBasedOnLevelSystem m_gunInventorySystem;
 
     private float m_currentTimeBetweenShots;
     private GunScriptableObject m_currentGun;
@@ -23,7 +24,7 @@ public class GunModel : MonoBehaviour
 
     #region Inject
     [Inject]
-    public void Init(InputController inputController, GunInventorySystem gunInventorySystem)
+    public void Init(InputController inputController, GunInventoryBasedOnLevelSystem gunInventorySystem)
     {
         m_inputController = inputController;
         m_gunInventorySystem = gunInventorySystem;
@@ -36,8 +37,8 @@ public class GunModel : MonoBehaviour
         m_audioSource = GetComponent<AudioSource>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
 
-        InitGunObject(m_gunInventorySystem.Gun);
-        m_gunInventorySystem.OnGunChanged += InitGunObject;
+        InitGunObject(m_gunInventorySystem.CurrentItem);
+        m_gunInventorySystem.OnItemChanged += InitGunObject;
     }
 
     private void Awake()

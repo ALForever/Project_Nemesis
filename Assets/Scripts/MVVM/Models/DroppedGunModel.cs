@@ -1,3 +1,4 @@
+using Assets.Scripts.CSharpClasses.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -5,10 +6,10 @@ public class DroppedGunModel : MonoBehaviour
 {
     [SerializeField] private float m_timeToDisposeGun;
 
-    private GunScriptableObject m_gunScriptableObject;
+    private DropableGunScriptableObject m_gunScriptableObject;
 
     private InputController m_inputController;
-    private GunInventorySystem m_inventorySystem;
+    private GunInventoryBasedOnLevelSystem m_inventorySystem;
 
     private AudioSource m_audioSource;
 
@@ -18,7 +19,7 @@ public class DroppedGunModel : MonoBehaviour
     private float m_currentDropOnGroundTime;
 
     [Inject]
-    public void Init(InputController inputController, GunInventorySystem gunInventorySystem)
+    public void Init(InputController inputController, GunInventoryBasedOnLevelSystem gunInventorySystem)
     {
         m_inputController = inputController;
         m_inventorySystem = gunInventorySystem;
@@ -65,7 +66,7 @@ public class DroppedGunModel : MonoBehaviour
             return;
         }
 
-        if (!m_inventorySystem.TryAddGunBasedOnLevelSystem(m_gunScriptableObject))
+        if (!m_inventorySystem.TryAddItem(m_gunScriptableObject))
         {
             return;
         }
@@ -82,7 +83,7 @@ public class DroppedGunModel : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
     }
 
-    public void AfterInstantinate(GunScriptableObject gunScriptableObject)
+    public void AfterInstantinate(DropableGunScriptableObject gunScriptableObject)
     {
         m_gunScriptableObject = gunScriptableObject;
         InitGunObject();
